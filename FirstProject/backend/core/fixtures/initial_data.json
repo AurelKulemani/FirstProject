@@ -1,0 +1,92 @@
+[
+  {
+    "model": "core.service",
+    "pk": 1,
+    "fields": {
+      "name_en": "Haircut",
+      "name_sq": "Prerje floku",
+      "price": "400.00"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 2,
+    "fields": {
+      "name_en": "Beard Trim",
+      "name_sq": "Rregullim mjekre",
+      "price": "200.00"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 3,
+    "fields": {
+      "name_en": "Beard Cleaning",
+      "name_sq": "Pastrim mjekre",
+      "price": "100.00"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 4,
+    "fields": {
+      "name_en": "Eyebrow Cleaning",
+      "name_sq": "Pastrim vetullash",
+      "price": "100.00"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 5,
+    "fields": {
+      "name_en": "Wax Cleaning",
+      "name_sq": "Pastrim me dyll",
+      "price": "200.00"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 6,
+    "fields": {
+      "name_en": "Hair Wash",
+      "name_sq": "Larje flokesh",
+      "price": "100.00"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 7,
+    "fields": {
+      "name_en": "Beard Coloring",
+      "name_sq": "Lyerje mjekre",
+      "price": "300.00"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 8,
+    "fields": {
+      "name_en": "Hair Coloring",
+      "name_sq": "Lyerje flokesh",
+      "price": "500.00"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 9,
+    "fields": {
+      "name_en": "Facial Treatment",
+      "name_sq": "Trajtim fytyre",
+      "price": "1000.00"
+    }
+  },
+  {
+    "model": "core.service",
+    "pk": 10,
+    "fields": {
+      "name_en": "Full Package",
+      "name_sq": "Paketë",
+      "price": "1500.00"
+    }
+  }
+]

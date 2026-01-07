@@ -1,0 +1,36 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+      <img src="{% static 'core/img/logo.png' %}" alt="Logo" style="height:38px;width:auto;">
+      <span class="fw-semibold">{{ biz.name }}</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Kryefaqja{% else %}Home{% endif %}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}#booking">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Rezervo{% else %}Book{% endif %}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Rreth Nesh{% else %}About{% endif %}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Kontakto{% else %}Contact{% endif %}</a></li>
+        <li class="nav-item">
+          <a class="btn btn-outline-dark btn-sm" href="tel:{{ biz.phone|cut:' ' }}">
+            {% if LANGUAGE_CODE|slice:":2" == "sq" %}Telefono{% else %}Call{% endif %}
+          </a>
+        </li>
+
+        <li class="nav-item ms-lg-2">
+          <form action="{% url 'set_language' %}" method="post" class="d-flex gap-1 align-items-center mb-0">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <button name="language" value="en" class="btn btn-sm {% if LANGUAGE_CODE|slice:":2" == "en" %}btn-dark{% else %}btn-outline-dark{% endif %}" type="submit">EN</button>
+            <button name="language" value="sq" class="btn btn-sm {% if LANGUAGE_CODE|slice:":2" == "sq" %}btn-dark{% else %}btn-outline-dark{% endif %}" type="submit">SQ</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

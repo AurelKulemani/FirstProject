@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{% if LANGUAGE_CODE|slice:":2" == "sq" %}Rreth Nesh{% else %}About{% endif %}{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-6">
+        <h1 class="fw-bold mb-3">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Rreth Nesh{% else %}About Us{% endif %}</h1>
+        <p class="text-muted fs-5">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}
+            {{ biz.name }} është një barbershop modern në zemër të Peshkopisë, i krijuar për meshkujt që vlerësojnë stilin,
+            cilësinë dhe përkujdesjen në çdo detaj. Me një ambient bashkëkohor dhe atmosferë profesionale,
+            ofrojmë shërbime të personalizuara për çdo klient.
+          {% else %}
+            {{ biz.name }} is a modern barbershop in the heart of Peshkopi, built for men who value style, quality, and attention to detail.
+            With a contemporary atmosphere and a professional approach, we deliver personalized grooming services for every client.
+          {% endif %}
+        </p>
+
+        <p class="text-muted">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}
+            Fokusimi ynë është të kombinojmë teknikat klasike të berberisë me trendet më të fundit,
+            duke garantuar rezultate të pastra, elegante dhe moderne. Çdo prerje realizohet me kujdes maksimal,
+            duke respektuar stilin dhe kërkesat individuale të klientit.
+          {% else %}
+            Our focus is on blending classic barbering with the latest trends—delivering clean, modern results every time.
+            Each haircut is crafted with care, matching your preferences and personal style.
+          {% endif %}
+        </p>
+
+        <p class="mb-4">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}
+            Në {{ biz.name }}, çdo vizitë është më shumë sesa një prerje flokësh — është një eksperiencë.
+          {% else %}
+            At {{ biz.name }}, every visit is more than a haircut — it’s an experience.
+          {% endif %}
+        </p>
+
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-dark" href="{% url 'contact' %}">
+            {% if LANGUAGE_CODE|slice:":2" == "sq" %}Kontakto{% else %}Contact{% endif %}
+          </a>
+          <a class="btn btn-outline-dark" href="https://instagram.com/{{ biz.instagram }}" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="hero-card soft-shadow">
+          <img src="{% static 'core/img/inside.jpg' %}" class="w-100" alt="Inside the studio">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

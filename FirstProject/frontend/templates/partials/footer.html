@@ -1,0 +1,18 @@
+<footer class="border-top mt-5">
+  <div class="container py-4">
+    <div class="row g-3 align-items-center">
+      <div class="col-md-6">
+        <div class="d-flex align-items-center gap-2">
+          <span class="fw-semibold">{{ biz.name }}</span>
+          <span class="text-muted">• {{ biz.city }}</span>
+        </div>
+        <div class="text-muted small">{{ biz.address }}</div>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <a class="text-decoration-none me-3" target="_blank" rel="noopener" href="https://instagram.com/{{ biz.instagram }}">Instagram</a>
+        <a class="text-decoration-none me-3" href="tel:{{ biz.phone|cut:' ' }}">{{ biz.phone }}</a>
+      </div>
+    </div>
+    <div class="text-muted small mt-3">© {% now "Y" %} {{ biz.name }}. {% if LANGUAGE_CODE|slice:":2" == "sq" %}Të gjitha të drejtat e rezervuara.{% else %}All rights reserved.{% endif %}</div>
+  </div>
+</footer>

@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{% if LANGUAGE_CODE|slice:":2" == "sq" %}Kryefaqja{% else %}Home{% endif %}{% endblock %}
+
+{% block content %}
+<section class="hero py-5">
+  <div class="container">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-6">
+        <span class="badge badge-soft rounded-pill px-3 py-2 mb-3">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}Barbershop • Peshkopi{% else %}Barbershop • Peshkopi{% endif %}
+        </span>
+        <h1 class="display-5 fw-bold mb-3">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}Stil i pastër. Detaje perfekte.{% else %}Clean cuts. Sharp details.{% endif %}
+        </h1>
+        <p class="lead text-muted mb-4">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}
+            Mirë se vini te {{ biz.name }} — një eksperiencë moderne berberie me fokus te cilësia dhe stili juaj.
+          {% else %}
+            Welcome to {{ biz.name }} — a modern barber experience focused on quality, comfort, and your personal style.
+          {% endif %}
+        </p>
+
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-dark btn-lg" href="#services">
+            {% if LANGUAGE_CODE|slice:":2" == "sq" %}Shiko Shërbimet{% else %}View Services{% endif %}
+          </a>
+          <a class="btn btn-outline-dark btn-lg" href="{% url 'contact' %}">
+            {% if LANGUAGE_CODE|slice:":2" == "sq" %}Rezervo / Kontakto{% else %}Book / Contact{% endif %}
+          </a>
+          <a class="btn btn-outline-secondary btn-lg" target="_blank" rel="noopener" href="https://instagram.com/{{ biz.instagram }}">
+            Instagram
+          </a>
+        </div>
+
+        <div class="mt-4 text-muted">
+          <div><strong>{% if LANGUAGE_CODE|slice:":2" == "sq" %}Orari:{% else %}Hours:{% endif %}</strong> {{ biz.hours }} • {% if LANGUAGE_CODE|slice:":2" == "sq" %}Pushim: {{ biz.off_day_sq }}{% else %}Closed: {{ biz.off_day_en }}{% endif %}</div>
+          <div class="mt-1"><strong>{% if LANGUAGE_CODE|slice:":2" == "sq" %}Adresa:{% else %}Address:{% endif %}</strong> {{ biz.address }}</div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="hero-card soft-shadow">
+          <img src="{% static 'core/img/hero.jpg' %}" class="w-100" alt="Redi Hair Studio">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-3">
+      <div>
+        <h2 class="fw-bold mb-1">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Shërbimet{% else %}Services{% endif %}</h2>
+        <p class="text-muted mb-0">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Çmime të qarta dhe të thjeshta.{% else %}Simple, transparent pricing.{% endif %}</p>
+      </div>
+      <a class="btn btn-sm btn-outline-dark" href="{% url 'contact' %}">
+        {% if LANGUAGE_CODE|slice:":2" == "sq" %}Kontakto{% else %}Contact{% endif %}
+      </a>
+    </div>
+
+    <div class="row g-3">
+      {% for s in services %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 soft-shadow">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 class="card-title mb-2">{{ s.display_name }}</h5>
+              <span class="badge bg-dark rounded-pill">{{ s.price }} {% if LANGUAGE_CODE|slice:":2" == "sq" %}Lek{% else %}ALL{% endif %}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-warning mb-0">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}
+            Nuk ka shërbime ende. Shto shërbime nga Admin panel.
+          {% else %}
+            No services yet. Add services from the Admin panel.
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="booking" class="py-5">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-5">
+        <h2 class="fw-bold mb-2">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}Rezervo një orar{% else %}Book an appointment{% endif %}
+        </h2>
+        <p class="text-muted">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}
+            Plotëso formularin dhe ne do të konfirmojmë orarin.
+          {% else %}
+            Fill out the form and we’ll confirm your slot.
+          {% endif %}
+        </p>
+        <div class="text-muted small">
+          <div><strong>{% if LANGUAGE_CODE|slice:":2" == "sq" %}Orari:{% else %}Hours:{% endif %}</strong> {{ biz.hours }}</div>
+          <div><strong>{% if LANGUAGE_CODE|slice:":2" == "sq" %}Pushim:{% else %}Closed:{% endif %}</strong> {% if LANGUAGE_CODE|slice:":2" == "sq" %}{{ biz.off_day_sq }}{% else %}{{ biz.off_day_en }}{% endif %}</div>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="card border-0 soft-shadow">
+          <div class="card-body p-4">
+            <form method="post" action="{% url 'book' %}">
+              {% csrf_token %}
+
+              {% if booking_form.non_field_errors %}
+                <div class="alert alert-danger">
+                  {{ booking_form.non_field_errors }}
+                </div>
+              {% endif %}
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Shërbimi{% else %}Service{% endif %}</label>
+                  {{ booking_form.service }}
+                  {% if booking_form.service.errors %}<div class="text-danger small">{{ booking_form.service.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Data{% else %}Date{% endif %}</label>
+                  {{ booking_form.date }}
+                  {% if booking_form.date.errors %}<div class="text-danger small">{{ booking_form.date.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Ora{% else %}Time{% endif %}</label>
+                  {{ booking_form.time }}
+                  {% if booking_form.time.errors %}<div class="text-danger small">{{ booking_form.time.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Emër & Mbiemër{% else %}Full name{% endif %}</label>
+                  {{ booking_form.full_name }}
+                  {% if booking_form.full_name.errors %}<div class="text-danger small">{{ booking_form.full_name.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Numër telefoni{% else %}Phone{% endif %}</label>
+                  {{ booking_form.phone }}
+                  {% if booking_form.phone.errors %}<div class="text-danger small">{{ booking_form.phone.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Email (opsionale){% else %}Email (optional){% endif %}</label>
+                  {{ booking_form.email }}
+                  {% if booking_form.email.errors %}<div class="text-danger small">{{ booking_form.email.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Shënim (opsionale){% else %}Notes (optional){% endif %}</label>
+                  {{ booking_form.notes }}
+                  {% if booking_form.notes.errors %}<div class="text-danger small">{{ booking_form.notes.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-12 d-flex flex-wrap gap-2 mt-2">
+                  <button class="btn btn-dark btn-lg" type="submit">
+                    {% if LANGUAGE_CODE|slice:":2" == "sq" %}Dërgo Rezervimin{% else %}Submit Booking{% endif %}
+                  </button>
+                  <a class="btn btn-outline-dark btn-lg" href="tel:{{ biz.phone|cut:' ' }}">
+                    {% if LANGUAGE_CODE|slice:":2" == "sq" %}Telefono{% else %}Call{% endif %}
+                  </a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="fw-bold mb-3">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Galeria{% else %}Gallery{% endif %}</h2>
+    <div class="row g-3 gallery">
+      <div class="col-md-4">
+        <img src="{% static 'core/img/haircut1.jpg' %}" class="w-100" alt="Haircut 1">
+      </div>
+      <div class="col-md-4">
+        <img src="{% static 'core/img/haircut2.jpg' %}" class="w-100" alt="Haircut 2">
+      </div>
+      <div class="col-md-4">
+        <img src="{% static 'core/img/haircut3.jpg' %}" class="w-100" alt="Haircut 3">
+      </div>
+      <div class="col-md-6">
+        <img src="{% static 'core/img/inside.jpg' %}" class="w-100" alt="Inside">
+      </div>
+      <div class="col-md-6">
+        <img src="{% static 'core/img/outside.jpg' %}" class="w-100" alt="Outside">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-5">
+        <h2 class="fw-bold mb-2">{% if LANGUAGE_CODE|slice:":2" == "sq" %}Na gjeni lehtë{% else %}Find us easily{% endif %}</h2>
+        <p class="text-muted">
+          {% if LANGUAGE_CODE|slice:":2" == "sq" %}
+            Kliko “Directions” për navigim në Google Maps.
+          {% else %}
+            Tap “Directions” to open Google Maps navigation.
+          {% endif %}
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-dark" target="_blank" rel="noopener"
+             href="https://www.google.com/maps/search/?api=1&query={{ biz.address|urlencode }}">
+            {% if LANGUAGE_CODE|slice:":2" == "sq" %}Directions{% else %}Directions{% endif %}
+          </a>
+          <a class="btn btn-outline-dark" href="tel:{{ biz.phone|cut:' ' }}">
+            {% if LANGUAGE_CODE|slice:":2" == "sq" %}Telefono{% else %}Call{% endif %}
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="ratio ratio-16x9 soft-shadow rounded-4 overflow-hidden">
+          <iframe
+            src="https://www.google.com/maps?q={{ biz.address|urlencode }}&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
